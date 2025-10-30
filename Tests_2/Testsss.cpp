@@ -166,7 +166,7 @@ namespace MatrixUnitTests
         TEST_METHOD(TestFillWithGenerator)
         {
             Matrix matrix(5);
-            auto generator = std::make_unique<RandomGenerator>(10, 10); // Always generates 10
+            auto generator = std::make_unique<RandomGenerator>(10, 10);
             matrix.fill(std::move(generator));
 
             for (size_t i = 0; i < matrix.size(); ++i) {
@@ -181,7 +181,7 @@ namespace MatrixUnitTests
 
         TEST_METHOD(TestRandomGenerator)
         {
-            RandomGenerator generator(10, 10); // Always generates 10
+            RandomGenerator generator(10, 10);
             int value = generator.generate();
             Assert::AreEqual(10, value);
         }
@@ -216,7 +216,7 @@ namespace MatrixUnitTests
             exercise.Task1();
 
             const Matrix& result = exercise.get_matrix();
-            Assert::AreEqual(0, result[4]); // Min positive 1 should be replaced with 0
+            Assert::AreEqual(0, result[4]);
         }
 
         TEST_METHOD(TestTask1_NoPositiveElements)
@@ -259,12 +259,12 @@ namespace MatrixUnitTests
         TEST_METHOD(TestTask2_FilterEvenDigits)
         {
             auto matrix = std::make_unique<Matrix>(6);
-            (*matrix)[0] = 2468;  // should pass (2 and 8 - both even)
-            (*matrix)[1] = 1357;  // should not pass (1 and 7 - both odd)
-            (*matrix)[2] = 42;    // should pass (4 and 2 - both even)
-            (*matrix)[3] = 3579;  // should not pass (3 and 9 - both odd)
-            (*matrix)[4] = 2004;  // should pass (2 and 4 - both even)
-            (*matrix)[5] = 1234;  // should not pass (1 and 4 - odd and even)
+            (*matrix)[0] = 2468;  
+            (*matrix)[1] = 1357;  
+            (*matrix)[2] = 42;    
+            (*matrix)[3] = 3579;  
+            (*matrix)[4] = 2004;  
+            (*matrix)[5] = 1234;
 
             auto generator = std::make_unique<RandomGenerator>(1, 10);
             Task2Exercise exercise(std::move(matrix), std::move(generator));
@@ -315,7 +315,7 @@ namespace MatrixUnitTests
         {
             auto matrix = std::make_unique<Matrix>(14);
             for (int i = 0; i < 14; ++i) {
-                (*matrix)[i] = i + 1; // Values 1 to 14
+                (*matrix)[i] = i + 1; 
             }
 
             auto generator = std::make_unique<RandomGenerator>(1, 10);
@@ -325,18 +325,18 @@ namespace MatrixUnitTests
 
             const Matrix& result = exercise.get_matrix();
 
-            // Elements 0-1: Di - 1
-            Assert::AreEqual(0, result[0]);   // 1-1 = 0
-            Assert::AreEqual(1, result[1]);   // 2-1 = 1
+            
+            Assert::AreEqual(0, result[0]);
+            Assert::AreEqual(1, result[1]);
 
-            // Elements 2-11: -Di²
-            Assert::AreEqual(-9, result[2]);   // -3² = -9
-            Assert::AreEqual(-16, result[3]);  // -4² = -16
-            Assert::AreEqual(-25, result[4]);  // -5² = -25
+      
+            Assert::AreEqual(-9, result[2]);   
+            Assert::AreEqual(-16, result[3]);  
+            Assert::AreEqual(-25, result[4]);  
 
-            // Elements 12-13: Di - 1
-            Assert::AreEqual(12, result[12]); // 13-1 = 12
-            Assert::AreEqual(13, result[13]); // 14-1 = 13
+           
+            Assert::AreEqual(12, result[12]); 
+            Assert::AreEqual(13, result[13]); 
         }
 
         TEST_METHOD(TestTask3_SmallArray)
@@ -353,9 +353,9 @@ namespace MatrixUnitTests
 
             const Matrix& result = exercise.get_matrix();
 
-            Assert::AreEqual(0, result[0]);  // 1-1 = 0
-            Assert::AreEqual(1, result[1]);  // 2-1 = 1
-            Assert::AreEqual(-9, result[2]); // -3² = -9
+            Assert::AreEqual(0, result[0]); 
+            Assert::AreEqual(1, result[1]); 
+            Assert::AreEqual(-9, result[2]);
         }
     };
 
