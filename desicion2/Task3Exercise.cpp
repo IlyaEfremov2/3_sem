@@ -3,17 +3,6 @@
 
 namespace miit::algebra
 {
-    void Task3Exercise::Task1()
-    {
-        // Для Task3Exercise Task1 не реализован
-    }
-
-    std::unique_ptr<Matrix> Task3Exercise::Task2()
-    {
-        // Для Task3Exercise Task2 не реализован
-        return std::make_unique<Matrix>(*matrix);
-    }
-
     void Task3Exercise::Task3()
     {
         for (size_t i = 0; i < matrix->size(); ++i)

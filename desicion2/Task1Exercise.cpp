@@ -25,14 +25,4 @@ namespace miit::algebra
         }
     }
 
-    std::unique_ptr<Matrix> Task1Exercise::Task2()
-    {
-        // Для Task1Exercise Task2 не реализован
-        return std::make_unique<Matrix>(*matrix);
-    }
-
-    void Task1Exercise::Task3()
-    {
-        // Для Task1Exercise Task3 не реализован
-    }
 }

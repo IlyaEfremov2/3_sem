@@ -17,11 +17,6 @@ namespace miit::algebra
         return (first_digit % 2 == 0) && (last_digit % 2 == 0);
     }
 
-    void Task2Exercise::Task1()
-    {
-        // Для Task2Exercise Task1 не реализован
-    }
-
     std::unique_ptr<Matrix> Task2Exercise::Task2()
     {
         size_t new_size = 0;
@@ -51,8 +46,4 @@ namespace miit::algebra
         return result;
     }
 
-    void Task2Exercise::Task3()
-    {
-        // Для Task2Exercise Task3 не реализован
-    }
 }
