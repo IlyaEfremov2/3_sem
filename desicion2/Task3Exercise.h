@@ -1,11 +1,11 @@
-#pragma once
+п»ї#pragma once
 
 #include "Exercise.h"
 
 namespace miit::algebra
 {
     /**
-    * @brief Реализация задания 3: Преобразование массива по правилу
+    * @brief Р РµР°Р»РёР·Р°С†РёСЏ Р·Р°РґР°РЅРёСЏ 3: РџСЂРµРѕР±СЂР°Р·РѕРІР°РЅРёРµ РјР°СЃСЃРёРІР° РїРѕ РїСЂР°РІРёР»Сѓ
     */
     class Task3Exercise : public Exercise
     {

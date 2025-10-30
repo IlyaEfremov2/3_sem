@@ -1,4 +1,4 @@
-#include "Matrix.h"
+п»ї#include "Matrix.h"
 #include "Generator.h"
 #include <algorithm>
 #include <sstream>
@@ -67,7 +67,7 @@ namespace miit::algebra
     int& Matrix::operator[](size_t index)
     {
         if (index >= data->size()) {
-            throw std::out_of_range("выходит за границы");
+            throw std::out_of_range("РІС‹С…РѕРґРёС‚ Р·Р° РіСЂР°РЅРёС†С‹");
         }
         return (*data)[index];
     }
@@ -75,7 +75,7 @@ namespace miit::algebra
     const int& Matrix::operator[](size_t index) const
     {
         if (index >= data->size()) {
-            throw std::out_of_range("выходит заграницы");
+            throw std::out_of_range("РІС‹С…РѕРґРёС‚ Р·Р°РіСЂР°РЅРёС†С‹");
         }
         return (*data)[index];
     }
