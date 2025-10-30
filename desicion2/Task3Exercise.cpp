@@ -3,7 +3,7 @@
 
 namespace miit::algebra
 {
-    void Task3Exercise::Task3()
+    void Task3Exercise::execute()
     {
         for (size_t i = 0; i < matrix->size(); ++i)
         {

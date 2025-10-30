@@ -1,7 +1,8 @@
 #include "Matrix.h"
 #include "Generator.h"
-#include <sstream>
 #include <algorithm>
+#include <sstream>
+#include <stdexcept>
 
 namespace miit::algebra
 {
@@ -38,10 +39,13 @@ namespace miit::algebra
     Matrix Matrix::operator<<(size_t positions) const
     {
         Matrix result(*this);
-        if (!result.data->empty())
+        if (!result.data->empty() && positions > 0)
         {
             positions %= result.data->size();
-            std::rotate(result.data->begin(), result.data->begin() + positions, result.data->end());
+            if (positions > 0)
+            {
+                std::rotate(result.data->begin(), result.data->begin() + positions, result.data->end());
+            }
         }
         return result;
     }
@@ -49,21 +53,30 @@ namespace miit::algebra
     Matrix Matrix::operator>>(size_t positions) const
     {
         Matrix result(*this);
-        if (!result.data->empty())
+        if (!result.data->empty() && positions > 0)
         {
             positions %= result.data->size();
-            std::rotate(result.data->rbegin(), result.data->rbegin() + positions, result.data->rend());
+            if (positions > 0)
+            {
+                std::rotate(result.data->rbegin(), result.data->rbegin() + positions, result.data->rend());
+            }
         }
         return result;
     }
 
     int& Matrix::operator[](size_t index)
     {
+        if (index >= data->size()) {
+            throw std::out_of_range("выходит за границы");
+        }
         return (*data)[index];
     }
 
     const int& Matrix::operator[](size_t index) const
     {
+        if (index >= data->size()) {
+            throw std::out_of_range("выходит заграницы");
+        }
         return (*data)[index];
     }
 
@@ -91,7 +104,7 @@ namespace miit::algebra
             oss << (*data)[i];
             if (i < data->size() - 1)
             {
-                oss << ", ";
+                oss << ",";
             }
         }
         oss << "]";
@@ -104,15 +117,5 @@ namespace miit::algebra
         {
             (*data)[i] = generator->generate();
         }
-    }
-
-    void Matrix::fill_zeros()
-    {
-        std::fill(data->begin(), data->end(), 0);
-    }
-
-    void Matrix::fill_constant(int value)
-    {
-        std::fill(data->begin(), data->end(), value);
     }
 }

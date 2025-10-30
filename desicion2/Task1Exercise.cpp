@@ -1,12 +1,12 @@
 ﻿#include "Task1Exercise.h"
 #include <algorithm>
-#include <climits>
+#include <limits>
 
 namespace miit::algebra
 {
-    void Task1Exercise::Task1()
+    void Task1Exercise::execute()
     {
-        int min_positive = INT_MAX;
+        int min_positive = std::numeric_limits<int>::max();
         int min_index = -1;
 
         for (size_t i = 0; i < matrix->size(); ++i)

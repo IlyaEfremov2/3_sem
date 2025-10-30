@@ -29,20 +29,9 @@ namespace miit::algebra
         virtual ~Exercise() = default;
 
         /**
-        * @brief Задание 1: Замена минимального положительного элемента нулем
+        * @brief Выполнение задания
         */
-        virtual void Task1() = 0;
-
-        /**
-        * @brief Задание 2: Фильтрация элементов с четными первой и последней цифрами
-        * @return новая матрица с отфильтрованными элементами
-        */
-        virtual std::unique_ptr<Matrix> Task2() = 0;
-
-        /**
-        * @brief Задание 3: Преобразование массива по правилу
-        */
-        virtual void Task3() = 0;
+        virtual void execute() = 0;
 
         /**
         * @brief Получить матрицу

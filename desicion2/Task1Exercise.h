@@ -12,6 +12,6 @@ namespace miit::algebra
     public:
         using Exercise::Exercise;
 
-        void Task1() override;
+        void execute() override;
     };
 }

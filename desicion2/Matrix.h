@@ -124,16 +124,5 @@ namespace miit::algebra
         * @param generator генератор значений
         */
         void fill(std::unique_ptr<Generator> generator);
-
-        /**
-        * @brief Заполнить матрицу нулями
-        */
-        void fill_zeros();
-
-        /**
-        * @brief Заполнить матрицу константным значением
-        * @param value значение для заполнения
-        */
-        void fill_constant(int value);
     };
 }

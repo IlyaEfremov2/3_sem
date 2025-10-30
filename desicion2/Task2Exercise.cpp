@@ -17,33 +17,25 @@ namespace miit::algebra
         return (first_digit % 2 == 0) && (last_digit % 2 == 0);
     }
 
-    std::unique_ptr<Matrix> Task2Exercise::Task2()
+    void Task2Exercise::execute()
     {
-        size_t new_size = 0;
+        // Создаем временный вектор для отфильтрованных элементов
+        std::vector<int> filtered_elements;
 
-        // Подсчитываем количество подходящих элементов
+        // Фильтруем элементы с четными первой и последней цифрами
         for (size_t i = 0; i < matrix->size(); ++i)
         {
             if (check_digits((*matrix)[i]))
             {
-                new_size++;
+                filtered_elements.push_back((*matrix)[i]);
             }
         }
 
-        // Создаем новую матрицу
-        auto result = std::make_unique<Matrix>(new_size);
-        size_t index = 0;
-
-        // Заполняем новую матрицу
-        for (size_t i = 0; i < matrix->size(); ++i)
+        // Заменяем данные текущей матрицы на отфильтрованные
+        *matrix = Matrix(filtered_elements.size());
+        for (size_t i = 0; i < filtered_elements.size(); ++i)
         {
-            if (check_digits((*matrix)[i]))
-            {
-                (*result)[index++] = (*matrix)[i];
-            }
+            (*matrix)[i] = filtered_elements[i];
         }
-
-        return result;
     }
-
 }

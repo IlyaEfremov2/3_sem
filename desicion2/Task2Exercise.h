@@ -20,6 +20,6 @@ namespace miit::algebra
     public:
         using Exercise::Exercise;
 
-        std::unique_ptr<Matrix> Task2() override;
+        void execute() override;
     };
 }
