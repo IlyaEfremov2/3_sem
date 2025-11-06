@@ -33,9 +33,9 @@ int main()
     setlocale(LC_ALL, "Russian");
     try
     {
-        cout << "random" << endl;
-        cout << "keyboard" << endl;
-        cout << "constant" << endl;
+        cout << "random" << " - случайный ввод" << endl;
+        cout << "keyboard" << " - ввод с клавиатуры" << endl;
+        cout << "constant" << " - с константой" << endl;
 
         int choice;
         cin >> choice;
