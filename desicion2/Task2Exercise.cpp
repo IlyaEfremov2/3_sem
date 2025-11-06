@@ -1,5 +1,6 @@
 ﻿#include "Task2Exercise.h"
 #include <cmath>
+#include <iostream>
 
 namespace miit::algebra
 {
@@ -19,10 +20,8 @@ namespace miit::algebra
 
     void Task2Exercise::execute()
     {
-        // Создаем временный вектор для отфильтрованных элементов
         std::vector<int> filtered_elements;
 
-        // Фильтруем элементы с четными первой и последней цифрами
         for (size_t i = 0; i < matrix->size(); ++i)
         {
             if (check_digits((*matrix)[i]))
@@ -31,11 +30,15 @@ namespace miit::algebra
             }
         }
 
-        // Заменяем данные текущей матрицы на отфильтрованные
+        size_t filtered_count = filtered_elements.size();
+
         *matrix = Matrix(filtered_elements.size());
         for (size_t i = 0; i < filtered_elements.size(); ++i)
         {
             (*matrix)[i] = filtered_elements[i];
         }
+
+        std::cout << "2 задание: " << matrix->to_string() << std::endl;
+        std::cout << std::endl;
     }
 }

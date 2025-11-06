@@ -1,6 +1,8 @@
 ﻿#include "Task1Exercise.h"
 #include <algorithm>
 #include <limits>
+#include <limits>
+#include <iostream>
 
 namespace miit::algebra
 {
@@ -19,10 +21,7 @@ namespace miit::algebra
             }
         }
 
-        if (min_index != -1)
-        {
-            (*matrix)[min_index] = 0;
-        }
+        std::cout << "1 Задание: " << matrix->to_string() << std::endl;
+        std::cout << std::endl;
     }
-
 }
