@@ -7,6 +7,7 @@
 #include "../desicion2/Exercise.h"
 #include "../desicion2/RandomGenerator.h"
 #include "../desicion2/IStreamGenerator.h"
+#include "../desicion2/ConstantGenerator.h"
 #include "../desicion2/Task1Exercise.h"
 #include "../desicion2/Task2Exercise.h"
 #include "../desicion2/Task3Exercise.h"
@@ -22,9 +23,9 @@ void clearInputBuffer()
 
 enum InputMethod
 {
-    random = 1,
-    keyboard = 2,
-    constant = 3
+    random,
+    keyboard,
+    constant
 };
 
 int main()
@@ -32,9 +33,9 @@ int main()
     setlocale(LC_ALL, "Russian");
     try
     {
-        cout << "1 - Случайные числа" << endl;
-        cout << "2 - Ввод с клавиатуры" << endl;
-        cout << "3 - Заполнение константой" << endl;
+        cout << "random" << endl;
+        cout << "keyboard" << endl;
+        cout << "constant" << endl;
 
         int choice;
         cin >> choice;
