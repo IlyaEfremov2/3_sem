@@ -3,6 +3,8 @@
 #include <vector>
 #include <memory>
 
+class MusicStorage;
+
 /**
  * @brief Базовый класс, представляющий музыкальное произведение
  */
@@ -14,6 +16,7 @@ private:
     int year;
     std::string album;
     double price;
+    std::vector<MusicStorage> mediaCarriers;
 
 public:
     /**

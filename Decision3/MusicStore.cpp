@@ -1,73 +1,126 @@
 ﻿#include "MusicStore.h"
 #include <algorithm>
+#include <stdexcept>
+
+
+MusicItem::MusicItem(std::shared_ptr<MusicWork> work)
+    : work(work), soldCount(0) {}
+
+void MusicItem::addStorage(const MusicStorage& storage) {
+    availableStorages.push_back(storage);
+}
+
+std::shared_ptr<MusicWork> MusicItem::getWork() const {
+    return work;
+}
+
+std::vector<std::string> MusicItem::getAvailableMediaTypes() const {
+    std::vector<std::string> mediaTypes;
+    for (const auto& storage : availableStorages) {
+        mediaTypes.push_back(storage.getMediaType());
+    }
+    return mediaTypes;
+}
+
+std::string MusicItem::getInfo() const {
+    if (!work) return "Пустой музыкальный элемент";
+
+    std::string info = work->getInfo() + "\nДоступные носители: ";
+    for (const auto& storage : availableStorages) {
+        info += storage.getMediaType() + " ";
+    }
+    info += "\nПродано копий: " + std::to_string(soldCount);
+    return info;
+}
+
+int MusicItem::getSoldCount() const {
+    return soldCount;
+}
+
+void MusicItem::increaseSoldCount(int quantity) {
+    if (quantity > 0) {
+        soldCount += quantity;
+    }
+}
+
+const std::vector<MusicStorage>& MusicItem::getStorages() const {
+    return availableStorages;
+}
 
 MusicStore::MusicStore() : totalSales(0) {}
 
-void MusicStore::addCollection(const MusicCollection& collection) {
-    collections.push_back(collection);
+void MusicStore::addMusicItem(const MusicItem& item) {
+    musicItems.push_back(item);
 }
 
-std::vector<MusicCollection> MusicStore::findWorkByTitle(const std::string& title) const {
-    std::vector<MusicCollection> result;
-    for (const auto& collection : collections) {
-        if (collection.getWork()->getTitle() == title) {
-            result.push_back(collection);
+std::vector<MusicItem> MusicStore::findWorkByTitle(const std::string& title) const {
+    std::vector<MusicItem> result;
+    for (const auto& item : musicItems) {
+        if (item.getWork()->getTitle() == title) {
+            result.push_back(item);
         }
     }
     return result;
 }
 
-std::vector<MusicCollection> MusicStore::findWorkByComposer(const std::string& composer) const {
-    std::vector<MusicCollection> result;
-    for (const auto& collection : collections) {
-        if (collection.getWork()->getComposer() == composer) {
-            result.push_back(collection);
+std::vector<MusicItem> MusicStore::findWorkByComposer(const std::string& composer) const {
+    std::vector<MusicItem> result;
+    for (const auto& item : musicItems) {
+        if (item.getWork()->getComposer() == composer) {
+            result.push_back(item);
         }
     }
     return result;
 }
 
-std::vector<MusicCollection> MusicStore::findWorkByGenre(const std::string& genre) const {
-    std::vector<MusicCollection> result;
-    for (const auto& collection : collections) {
-        if (collection.getWork()->getGenre() == genre) {
-            result.push_back(collection);
+std::vector<MusicItem> MusicStore::findWorkByGenre(const std::string& genre) const {
+    std::vector<MusicItem> result;
+    for (const auto& item : musicItems) {
+        if (item.getWork()->getGenre() == genre) {
+            result.push_back(item);
         }
     }
     return result;
 }
 
 std::vector<std::string> MusicStore::getAvailableMediaTypes(const std::string& workTitle) const {
-    auto works = findWorkByTitle(workTitle);
-    if (!works.empty()) {
-        return works[0].getAvailableMediaTypes();
+    auto items = findWorkByTitle(workTitle);
+    if (!items.empty()) {
+        return items[0].getAvailableMediaTypes();
     }
     return {};
 }
 
-std::vector<MusicCollection> MusicStore::getWorksByGenre(const std::string& genre) const {
+std::vector<MusicItem> MusicStore::getWorksByGenre(const std::string& genre) const {
     return findWorkByGenre(genre);
 }
 
 std::string MusicStore::getWorkInfo(const std::string& workTitle) const {
-    auto works = findWorkByTitle(workTitle);
-    if (!works.empty()) {
-        return works[0].getInfo();
+    auto items = findWorkByTitle(workTitle);
+    if (!items.empty()) {
+        return items[0].getInfo();
     }
     return "Произведение не найдено";
 }
 
 std::vector<std::string> MusicStore::getMostSoldWorks(int count) const {
-    std::vector<std::string> popularWorks;
-    int actualCount = count;
-    if (actualCount > static_cast<int>(collections.size())) {
-        actualCount = collections.size();
-    }
+    std::vector<MusicItem> sortedItems = musicItems;
+
+    std::sort(sortedItems.begin(), sortedItems.end(),
+        [](const MusicItem& a, const MusicItem& b) {
+            return a.getSoldCount() > b.getSoldCount();
+        });
+
+    std::vector<std::string> result;
+    int actualCount = std::min(count, static_cast<int>(sortedItems.size()));
 
     for (int i = 0; i < actualCount; i++) {
-        popularWorks.push_back(collections[i].getWork()->getTitle());
+        if (sortedItems[i].getWork()) {
+            result.push_back(sortedItems[i].getWork()->getTitle());
+        }
     }
-    return popularWorks;
+
+    return result;
 }
 
 double MusicStore::getSalesForPeriod() const {
@@ -75,8 +128,42 @@ double MusicStore::getSalesForPeriod() const {
 }
 
 void MusicStore::sellWork(const std::string& workTitle, const std::string& mediaType, int quantity) {
-    auto works = findWorkByTitle(workTitle);
-    if (!works.empty()) {
-        totalSales += works[0].getWork()->getPrice() * quantity;
+    if (quantity <= 0) {
+        throw std::invalid_argument("Количество должно быть положительным");
     }
+
+    auto items = findWorkByTitle(workTitle);
+    if (!items.empty()) {
+        for (auto& item : musicItems) {
+            if (item.getWork()->getTitle() == workTitle) {
+                bool mediaAvailable = false;
+                for (const auto& storage : item.getStorages()) {
+                    if (storage.getMediaType() == mediaType) {
+                        mediaAvailable = true;
+                        break;
+                    }
+                }
+
+                if (mediaAvailable) {
+                    double price = item.getWork()->getPrice();
+                    totalSales += price * quantity;
+                    item.increaseSoldCount(quantity);
+                    return;
+                }
+                else {
+                    throw std::runtime_error("Тип носителя '" + mediaType + "' не доступен для произведения '" + workTitle + "'");
+                }
+            }
+        }
+    }
+    throw std::runtime_error("Произведение '" + workTitle + "' не найдено");
+}
+
+MusicItem* MusicStore::findMusicItem(const std::string& title) {
+    for (auto& item : musicItems) {
+        if (item.getWork()->getTitle() == title) {
+            return &item;
+        }
+    }
+    return nullptr;
 }

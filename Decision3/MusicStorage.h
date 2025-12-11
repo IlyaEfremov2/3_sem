@@ -10,6 +10,7 @@ private:
     std::string mediaType;  
     std::string location;
     int quantity;
+    std::vector<std::shared_ptr<MusicWork>> storedWorks;
 
 public:
     /**

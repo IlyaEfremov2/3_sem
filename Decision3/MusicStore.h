@@ -1,15 +1,76 @@
 ﻿#pragma once
-#include "MusicCollection.h"
+#include "MusicWork.h"
+#include "MusicStorage.h"
 #include <vector>
 #include <memory>
+#include <string>
+
+/**
+ * @brief Класс для хранения информации о музыкальном произведении и его носителях
+ */
+    class MusicItem {
+    private:
+        std::shared_ptr<MusicWork> work;          
+        std::vector<MusicStorage> availableStorages; 
+        int soldCount;                       
+
+    public:
+        /**
+         * @brief Конструктор музыкального элемента
+         * @param work Умный указатель на музыкальное произведение
+         */
+        explicit MusicItem(std::shared_ptr<MusicWork> work);
+
+        /**
+         * @brief Добавить носитель в коллекцию
+         * @param storage Носитель произведения
+         */
+        void addStorage(const MusicStorage& storage);
+
+        /**
+         * @brief Получить произведение
+         * @return Умный указатель на произведение
+         */
+        std::shared_ptr<MusicWork> getWork() const;
+
+        /**
+         * @brief Получить список доступных типов носителей
+         * @return Вектор строк с типами носителей
+         */
+        std::vector<std::string> getAvailableMediaTypes() const;
+
+        /**
+         * @brief Получить информацию о музыкальном элементе
+         * @return Строка с информацией о произведении и носителях
+         */
+        std::string getInfo() const;
+
+        /**
+         * @brief Получить количество проданных копий
+         * @return Количество проданных копий
+         */
+        int getSoldCount() const;
+
+        /**
+         * @brief Увеличить количество проданных копий
+         * @param quantity Количество для добавления
+         */
+        void increaseSoldCount(int quantity);
+
+        /**
+         * @brief Получить все доступные носители
+         * @return Вектор носителей
+         */
+        const std::vector<MusicStorage>& getStorages() const;
+};
 
 /**
  * @brief Основной класс магазина музыкальных произведений
  */
 class MusicStore {
 private:
-    std::vector<MusicCollection> collections;
-    double totalSales;
+    std::vector<MusicItem> musicItems;  
+    double totalSales;                  
 
 public:
     /**
@@ -18,31 +79,31 @@ public:
     MusicStore();
 
     /**
-     * @brief Добавить коллекцию в магазин
-     * @param collection Коллекция произведений
+     * @brief Добавить музыкальный элемент в магазин
+     * @param item Музыкальный элемент
      */
-    void addCollection(const MusicCollection& collection);
+    void addMusicItem(const MusicItem& item);
 
     /**
-     * @brief Найти произведения по названию
+     * @brief Найти музыкальные элементы по названию
      * @param title Название произведения для поиска
-     * @return Вектор найденных коллекций
+     * @return Вектор найденных музыкальных элементов
      */
-    std::vector<MusicCollection> findWorkByTitle(const std::string& title) const;
+    std::vector<MusicItem> findWorkByTitle(const std::string& title) const;
 
     /**
-     * @brief Найти произведения по композитору/исполнителю
+     * @brief Найти музыкальные элементы по композитору/исполнителю
      * @param composer Композитор для поиска
-     * @return Вектор найденных коллекций
+     * @return Вектор найденных музыкальных элементов
      */
-    std::vector<MusicCollection> findWorkByComposer(const std::string& composer) const;
+    std::vector<MusicItem> findWorkByComposer(const std::string& composer) const;
 
     /**
-     * @brief Найти произведения по жанру
+     * @brief Найти музыкальные элементы по жанру
      * @param genre Жанр для поиска
-     * @return Вектор найденных коллекций
+     * @return Вектор найденных музыкальных элементов
      */
-    std::vector<MusicCollection> findWorkByGenre(const std::string& genre) const;
+    std::vector<MusicItem> findWorkByGenre(const std::string& genre) const;
 
     /**
      * @brief Получить доступные типы носителей для произведения
@@ -54,9 +115,9 @@ public:
     /**
      * @brief Получить произведения по жанру
      * @param genre Жанр произведений
-     * @return Вектор коллекций произведений указанного жанра
+     * @return Вектор музыкальных элементов указанного жанра
      */
-    std::vector<MusicCollection> getWorksByGenre(const std::string& genre) const;
+    std::vector<MusicItem> getWorksByGenre(const std::string& genre) const;
 
     /**
      * @brief Получить информацию о произведении
@@ -85,4 +146,11 @@ public:
      * @param quantity Количество для продажи
      */
     void sellWork(const std::string& workTitle, const std::string& mediaType, int quantity);
+
+    /**
+     * @brief Найти музыкальный элемент по названию (внутренний метод)
+     * @param title Название произведения
+     * @return Найденный музыкальный элемент или nullptr
+     */
+    MusicItem* findMusicItem(const std::string& title);
 };

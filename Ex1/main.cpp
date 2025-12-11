@@ -4,15 +4,11 @@
 #include <limits>
 #include <Windows.h>
 #include "../Decision3/MusicWork.h"
-#include "../Decision3/MusicCollection.h"
 #include "../Decision3/MusicStorage.h"
 #include "../Decision3/MusicStore.h"
 
 using namespace std;
 
-/**
- * @brief Перечисление для пунктов меню
- */
 enum MenuOption {
     SHOW_ALL_WORKS = 1,
     SEARCH_BY_TITLE,
@@ -26,91 +22,21 @@ enum MenuOption {
     EXIT = 0
 };
 
-/**
- * @brief Функция для ввода строки с обработкой кодировки
- * @return Введенная строка
- */
 string inputString();
-
-/**
- * @brief Функция для ввода числа
- * @return Введенное число
- */
 double inputDouble();
-
-/**
- * @brief Функция для очистки буфера ввода
- */
 void clearInputBuffer();
-
-/**
- * @brief Функция для отображения главного меню
- */
 void displayMenu();
-
-/**
- * @brief Функция для инициализации тестовых данных
- * @param musicStore Ссылка на объект магазина
- */
 void initializeTestData(MusicStore& musicStore);
-
-/**
- * @brief Функция для отображения всех произведений
- * @param musicStore Константная ссылка на объект магазина
- */
 void displayAllWorks(const MusicStore& musicStore);
-
-/**
- * @brief Функция для поиска произведения по названию
- * @param musicStore Константная ссылка на объект магазина
- */
 void searchByTitle(const MusicStore& musicStore);
-
-/**
- * @brief Функция для поиска произведений по жанру
- * @param musicStore Константная ссылка на объект магазина
- */
 void searchByGenre(const MusicStore& musicStore);
-
-/**
- * @brief Функция для поиска произведений по композитору
- * @param musicStore Константная ссылка на объект магазина
- */
 void searchByComposer(const MusicStore& musicStore);
-
-/**
- * @brief Функция для показа доступных носителей произведения
- * @param musicStore Константная ссылка на объект магазина
- */
 void showAvailableMedia(const MusicStore& musicStore);
-
-/**
- * @brief Функция для продажи произведения
- * @param musicStore Ссылка на объект магазина
- */
 void sellWork(MusicStore& musicStore);
-
-/**
- * @brief Функция для показа общих продаж
- * @param musicStore Константная ссылка на объект магазина
- */
 void showTotalSales(const MusicStore& musicStore);
-
-/**
- * @brief Функция для показа популярных произведений
- * @param musicStore Константная ссылка на объект магазина
- */
 void showPopularWorks(const MusicStore& musicStore);
-
-/**
- * @brief Функция для демонстрации полиморфизма
- */
 void demonstratePolymorphism();
 
-/**
- * @brief Главная функция программы
- * @return Код завершения программы
- */
 int main() {
     SetConsoleCP(1251);
     SetConsoleOutputCP(1251);
@@ -246,34 +172,34 @@ void initializeTestData(MusicStore& musicStore) {
     MusicStorage storage3("Digital", "Онлайн магазин", 100);
     MusicStorage storage4("Cassette", "Секция C, полка 2", 3);
 
-    MusicCollection collection1(work1);
-    collection1.addStorage(storage1);
-    collection1.addStorage(storage2);
-    collection1.addStorage(storage4);
+    MusicItem item1(work1);
+    item1.addStorage(storage1);
+    item1.addStorage(storage2);
+    item1.addStorage(storage4);
 
-    MusicCollection collection2(work2);
-    collection2.addStorage(storage1);
-    collection2.addStorage(storage3);
+    MusicItem item2(work2);
+    item2.addStorage(storage1);
+    item2.addStorage(storage3);
 
-    MusicCollection collection3(work3);
-    collection3.addStorage(storage2);
-    collection3.addStorage(storage3);
+    MusicItem item3(work3);
+    item3.addStorage(storage2);
+    item3.addStorage(storage3);
 
-    MusicCollection collection4(work4);
-    collection4.addStorage(storage1);
-    collection4.addStorage(storage2);
-    collection4.addStorage(storage3);
-    collection4.addStorage(storage4);
+    MusicItem item4(work4);
+    item4.addStorage(storage1);
+    item4.addStorage(storage2);
+    item4.addStorage(storage3);
+    item4.addStorage(storage4);
 
-    MusicCollection collection5(work5);
-    collection5.addStorage(storage2);
-    collection5.addStorage(storage4);
+    MusicItem item5(work5);
+    item5.addStorage(storage2);
+    item5.addStorage(storage4);
 
-    musicStore.addCollection(collection1);
-    musicStore.addCollection(collection2);
-    musicStore.addCollection(collection3);
-    musicStore.addCollection(collection4);
-    musicStore.addCollection(collection5);
+    musicStore.addMusicItem(item1);
+    musicStore.addMusicItem(item2);
+    musicStore.addMusicItem(item3);
+    musicStore.addMusicItem(item4);
+    musicStore.addMusicItem(item5);
 }
 
 void displayAllWorks(const MusicStore& musicStore) {
@@ -298,8 +224,8 @@ void searchByTitle(const MusicStore& musicStore) {
 
     if (!works.empty()) {
         cout << "\nРезультат поиска:" << endl;
-        for (const auto& musicCollection : works) {
-            cout << musicCollection.getInfo() << endl;
+        for (const auto& item : works) {
+            cout << item.getInfo() << endl;
         }
     }
     else {
@@ -316,8 +242,8 @@ void searchByGenre(const MusicStore& musicStore) {
     auto works = musicStore.getWorksByGenre(genre);
 
     cout << "\nНайдено произведений в жанре '" << genre << "': " << works.size() << endl;
-    for (const auto& work : works) {
-        auto musicWork = work.getWork();
+    for (const auto& item : works) {
+        auto musicWork = item.getWork();
         if (musicWork) {
             cout << musicWork->getTitle() << " (" << musicWork->getYear() << ")" << endl;
         }
@@ -333,8 +259,8 @@ void searchByComposer(const MusicStore& musicStore) {
     auto works = musicStore.findWorkByComposer(composer);
 
     cout << "\nНайдено произведений композитора '" << composer << "': " << works.size() << endl;
-    for (const auto& work : works) {
-        auto musicWork = work.getWork();
+    for (const auto& item : works) {
+        auto musicWork = item.getWork();
         if (musicWork) {
             cout << musicWork->getTitle() << " (" << musicWork->getYear() << ")" << endl;
         }
@@ -368,21 +294,30 @@ void sellWork(MusicStore& musicStore) {
     string mediaType = inputString();
 
     cout << "Введите количество: ";
-    double quantity = inputDouble();
+    int quantity;
+    cin >> quantity;
+    clearInputBuffer();
 
     if (quantity <= 0) {
         cout << "Ошибка: введите корректное количество!" << endl;
         return;
     }
 
-    musicStore.sellWork(title, mediaType, quantity);
-    cout << "Продажа успешно завершена!" << endl;
+    try {
+        musicStore.sellWork(title, mediaType, quantity);
+        cout << "Продажа успешно завершена!" << endl;
+    }
+    catch (const exception& e) {
+        cout << "Ошибка при продаже: " << e.what() << endl;
+    }
 }
 
 void showPopularWorks(const MusicStore& musicStore) {
     cout << "\nПОПУЛЯРНЫЕ ПРОИЗВЕДЕНИЯ" << endl;
     cout << "Сколько произведений показать? ";
-    double count = inputDouble();
+    int count;
+    cin >> count;
+    clearInputBuffer();
 
     if (count <= 0) {
         cout << "Ошибка: введите корректное число!" << endl;
