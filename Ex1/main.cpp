@@ -9,8 +9,10 @@
 
 using namespace std;
 
-enum MenuOption {
-    SHOW_ALL_WORKS = 1,
+enum MenuOption
+{
+    EXIT,
+    SHOW_ALL_WORKS,
     SEARCH_BY_TITLE,
     SEARCH_BY_GENRE,
     SEARCH_BY_COMPOSER,
@@ -18,9 +20,9 @@ enum MenuOption {
     SELL_WORK,
     SHOW_TOTAL_SALES,
     SHOW_POPULAR_WORKS,
-    DEMONSTRATE_POLYMORPHISM,
-    EXIT = 0
+    DEMONSTRATE_POLYMORPHISM
 };
+
 
 string inputString();
 double inputDouble();
@@ -124,31 +126,18 @@ void clearInputBuffer() {
 }
 
 void displayMenu() {
-    const string MENU_TITLE = "МАГАЗИН МУЗЫКАЛЬНЫХ ПРОИЗВЕДЕНИЙ - ГЛАВНОЕ МЕНЮ";
-    const string OPTION_1 = "1. Показать все произведения";
-    const string OPTION_2 = "2. Найти произведение по названию";
-    const string OPTION_3 = "3. Найти произведения по жанру";
-    const string OPTION_4 = "4. Найти произведения по композитору";
-    const string OPTION_5 = "5. Показать доступные носители для произведения";
-    const string OPTION_6 = "6. Продать произведение";
-    const string OPTION_7 = "7. Показать общие продажи";
-    const string OPTION_8 = "8. Показать популярные произведения";
-    const string OPTION_9 = "9. Демонстрация полиморфизма";
-    const string OPTION_0 = "0. Выход";
-    const string CHOOSE_OPTION = "Выберите опцию: ";
-
-    cout << "\n" << MENU_TITLE << endl;
-    cout << OPTION_1 << endl;
-    cout << OPTION_2 << endl;
-    cout << OPTION_3 << endl;
-    cout << OPTION_4 << endl;
-    cout << OPTION_5 << endl;
-    cout << OPTION_6 << endl;
-    cout << OPTION_7 << endl;
-    cout << OPTION_8 << endl;
-    cout << OPTION_9 << endl;
-    cout << OPTION_0 << endl;
-    cout << CHOOSE_OPTION;
+    cout << "\nМАГАЗИН МУЗЫКАЛЬНЫХ ПРОИЗВЕДЕНИЙ - ГЛАВНОЕ МЕНЮ" << endl;
+    cout << EXIT << ". Выход" << endl;
+    cout << SHOW_ALL_WORKS << ". Показать все произведения" << endl;
+    cout << SEARCH_BY_TITLE << ". Найти произведение по названию" << endl;
+    cout << SEARCH_BY_GENRE << ". Найти произведения по жанру" << endl;
+    cout << SEARCH_BY_COMPOSER << ". Найти произведения по композитору" << endl;
+    cout << SHOW_AVAILABLE_MEDIA << ". Показать доступные носители для произведения" << endl;
+    cout << SELL_WORK << ". Продать произведение" << endl;
+    cout << SHOW_TOTAL_SALES << ". Показать общие продажи" << endl;
+    cout << SHOW_POPULAR_WORKS << ". Показать популярные произведения" << endl;
+    cout << DEMONSTRATE_POLYMORPHISM << ". Демонстрация полиморфизма" << endl;
+    cout << "Выберите опцию: ";
 }
 
 void initializeTestData(MusicStore& musicStore) {

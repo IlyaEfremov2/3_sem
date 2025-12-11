@@ -29,6 +29,8 @@ private:
 
 public:
     MusicStore();
+    void addStorageToStore(const MusicStorage& storage);
+    void registerStorageWithAllWorks(const MusicStorage& storage);
     void addMusicItem(const MusicItem& item);
     std::vector<MusicItem> findWorkByTitle(const std::string& title) const;
     std::vector<MusicItem> findWorkByComposer(const std::string& composer) const;

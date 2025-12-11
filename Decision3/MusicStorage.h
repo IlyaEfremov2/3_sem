@@ -4,6 +4,7 @@
 #include <memory>
 
 class MusicWork; 
+class MusicStore;
 
 class MusicStorage {
 private:
@@ -11,9 +12,10 @@ private:
     std::string location;
     int quantity;
     std::vector<std::shared_ptr<MusicWork>> storedWorks; 
+    MusicStore* store;
 
 public:
-    MusicStorage(const std::string& mediaType, const std::string& location, int quantity);
+    MusicStorage(MusicStore* store, const std::string& mediaType, const std::string& location, int quantity);
 
     std::string getMediaType() const;
     std::string getLocation() const;

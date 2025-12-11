@@ -8,6 +8,14 @@ MusicItem::MusicItem(std::shared_ptr<MusicWork> work)
 void MusicItem::addStorage(const MusicStorage& storage) {
     availableStorages.push_back(storage);
 }
+void MusicStore::addStorageToStore(const MusicStorage& storage) {
+    storage.push_back(storage);
+}
+
+void MusicStore::registerStorageWithAllWorks(const MusicStorage& storage) {
+ 
+}
+
 
 std::shared_ptr<MusicWork> MusicItem::getWork() const {
     return work;

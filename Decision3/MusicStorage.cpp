@@ -2,8 +2,13 @@
 #include "MusicWork.h"
 #include <algorithm>
 
-MusicStorage::MusicStorage(const std::string& mediaType, const std::string& location, int quantity)
-    : mediaType(mediaType), location(location), quantity(quantity) {
+MusicStorage::MusicStorage(MusicStore* store, const std::string& mediaType, const std::string& location, int quantity) : store(store), mediaType(mediaType), location(location), quantity(quantity)
+{
+
+    if (store != nullptr) {
+        store->addStorageToStore(*this);
+        store->registerStorageWithAllWorks(*this);
+    }
 }
 
 std::string MusicStorage::getMediaType() const {
