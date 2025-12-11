@@ -1,44 +1,28 @@
 ﻿#pragma once
 #include <string>
+#include <vector>
 #include <memory>
 
-/**
- * @brief Класс, представляющий носитель музыкального произведения
- */
+class MusicWork; 
+
 class MusicStorage {
 private:
-    std::string mediaType;  
+    std::string mediaType;
     std::string location;
     int quantity;
-    std::vector<std::shared_ptr<MusicWork>> storedWorks;
+    std::vector<std::shared_ptr<MusicWork>> storedWorks; 
 
 public:
-    /**
-     * @brief Конструктор носителя
-     * @param mediaType Тип носителя
-     * @param location Местоположение
-     * @param quantity Количество
-     */
     MusicStorage(const std::string& mediaType, const std::string& location, int quantity);
 
-    /**
-    * @brief Получить тип носителя
-    */
     std::string getMediaType() const;
-
-    /**
-    * @brief Получить местоположение
-    */
     std::string getLocation() const;
-
-    /**
-    * @brief Получить количество
-    */
     int getQuantity() const;
-
-    /**
-     * @brief Получить информацию о носителе
-     * @return Строка с информацией
-     */
     std::string getInfo() const;
+    std::vector<std::shared_ptr<MusicWork>> getStoredWorks() const;
+    void addWork(const std::shared_ptr<MusicWork>& work);
+    void removeWork(const std::shared_ptr<MusicWork>& work);
+    bool containsWork(const std::shared_ptr<MusicWork>& work) const;
+    int getWorksCount() const;
+    std::string getWorksInfo() const;
 };

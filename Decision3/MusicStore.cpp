@@ -2,7 +2,6 @@
 #include <algorithm>
 #include <stdexcept>
 
-
 MusicItem::MusicItem(std::shared_ptr<MusicWork> work)
     : work(work), soldCount(0) {}
 
@@ -105,7 +104,6 @@ std::string MusicStore::getWorkInfo(const std::string& workTitle) const {
 
 std::vector<std::string> MusicStore::getMostSoldWorks(int count) const {
     std::vector<MusicItem> sortedItems = musicItems;
-
     std::sort(sortedItems.begin(), sortedItems.end(),
         [](const MusicItem& a, const MusicItem& b) {
             return a.getSoldCount() > b.getSoldCount();
@@ -113,13 +111,11 @@ std::vector<std::string> MusicStore::getMostSoldWorks(int count) const {
 
     std::vector<std::string> result;
     int actualCount = std::min(count, static_cast<int>(sortedItems.size()));
-
     for (int i = 0; i < actualCount; i++) {
         if (sortedItems[i].getWork()) {
             result.push_back(sortedItems[i].getWork()->getTitle());
         }
     }
-
     return result;
 }
 
