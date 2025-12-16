@@ -1,9 +1,22 @@
 ﻿#include "MusicStorage.h"
 #include "MusicWork.h"
 #include <algorithm>
+#include <iostream>
 
 MusicStorage::MusicStorage(MusicStore* store, const std::string& mediaType, const std::string& location, int quantity) : store(store), mediaType(mediaType), location(location), quantity(quantity)
 {
+    if (store != nullptr) {
+        auto allWorks = store->getAllWorks();
+        for (const auto& work : allWorks) {
+            bool added = store->addStorageToWork(work->getTitle(), *this);
+
+            if (added) {
+                std::cout << "Добавлен носитель '" << mediaType
+                    << "' к произведению '" << work->getTitle() << "'" << std::endl;
+            }
+        }
+        store->addStorageToStore(*this);
+    }
 }
 
 std::string MusicStorage::getMediaType() const {

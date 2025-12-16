@@ -20,6 +20,7 @@ public:
     std::string getMediaType() const;
     std::string getLocation() const;
     int getQuantity() const;
+    MusicStore* store;
     std::string getInfo() const;
     std::vector<std::shared_ptr<MusicWork>> getStoredWorks() const;
     void addWork(const std::shared_ptr<MusicWork>& work);
