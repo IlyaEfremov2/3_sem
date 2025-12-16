@@ -28,6 +28,9 @@ private:
     double totalSales;
 
 public:
+    std::vector<std::shared_ptr<MusicWork>> getAllWorks() const;
+    bool addStorageToWork(const std::string& workTitle, const MusicStorage& storage);
+    void addStorageToStore(const MusicStorage& storage);
     MusicStore();
     void addStorageToStore(const MusicStorage& storage);
     void registerStorageWithAllWorks(const MusicStorage& storage);

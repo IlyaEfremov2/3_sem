@@ -171,3 +171,47 @@ MusicItem* MusicStore::findMusicItem(const std::string& title) {
     }
     return nullptr;
 }
+std::vector<std::shared_ptr<MusicWork>> MusicStore::getAllWorks() const {
+    std::vector<std::shared_ptr<MusicWork>> Allellements;
+
+    for (const auto& ellement : musicItems) {
+        auto proisvedenie = ellement.getWork();
+        Allellements.push_back(proisvedenie);
+    }
+
+    return Allellements;
+}
+
+bool MusicStore::addStorageToWork(const std::string& workTitle, const MusicStorage& storage) {
+    MusicItem* foundedellement = findMusicItem(workTitle);
+
+    if (foundedellement != nullptr) {
+        bool already = false;
+        for (const auto& nositel : foundedellement->getStorages()) {
+            if (nositel.getMediaType() == storage.getMediaType()) {
+                already = true;
+                break;
+            }
+        }
+
+        if (!already) {
+            foundedellement->addStorage(storage);
+            return true;
+        }
+    }
+
+    return false;
+}
+void MusicStore::addStorageToStore(const MusicStorage& storage) {
+    storeStorages.push_back(storage);
+}
+
+MusicItem* MusicStore::findMusicItem(const std::string& title) {
+    for (auto& ellement : musicItems) {
+        if (ellement.getWork()->getTitle() == title) {
+            return &ellement;
+        }
+    }
+
+    return nullptr;
+}

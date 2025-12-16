@@ -9,11 +9,6 @@ MusicStorage::MusicStorage(MusicStore* store, const std::string& mediaType, cons
         auto allWorks = store->getAllWorks();
         for (const auto& work : allWorks) {
             bool added = store->addStorageToWork(work->getTitle(), *this);
-
-            if (added) {
-                std::cout << "Добавлен носитель '" << mediaType
-                    << "' к произведению '" << work->getTitle() << "'" << std::endl;
-            }
         }
         store->addStorageToStore(*this);
     }
