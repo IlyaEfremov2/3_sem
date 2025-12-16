@@ -4,11 +4,6 @@
 
 MusicStorage::MusicStorage(MusicStore* store, const std::string& mediaType, const std::string& location, int quantity) : store(store), mediaType(mediaType), location(location), quantity(quantity)
 {
-
-    if (store != nullptr) {
-        store->addStorageToStore(*this);
-        store->registerStorageWithAllWorks(*this);
-    }
 }
 
 std::string MusicStorage::getMediaType() const {

@@ -3,7 +3,7 @@
 #include <vector>
 #include <memory>
 
-class MusicStorage;  // Предварительное объявление
+class MusicStorage;  
 
 class MusicWork {
 private:
