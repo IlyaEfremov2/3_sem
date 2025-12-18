@@ -12,15 +12,13 @@ private:
     std::string location;
     int quantity;
     std::vector<std::shared_ptr<MusicWork>> storedWorks; 
-    MusicStore* store;
+    std::vector<MusicStore*> stores;
 
 public:
-    MusicStorage(MusicStore* store, const std::string& mediaType, const std::string& location, int quantity);
-
+    MusicStorage(const std::string& mediaType, const std::string& location, int quantity);
     std::string getMediaType() const;
     std::string getLocation() const;
     int getQuantity() const;
-    MusicStore* store;
     std::string getInfo() const;
     std::vector<std::shared_ptr<MusicWork>> getStoredWorks() const;
     void addWork(const std::shared_ptr<MusicWork>& work);

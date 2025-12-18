@@ -3,7 +3,7 @@
 #include <algorithm>
 #include <iostream>
 
-MusicStorage::MusicStorage(MusicStore* store, const std::string& mediaType, const std::string& location, int quantity) : store(store), mediaType(mediaType), location(location), quantity(quantity)
+MusicStorage::MusicStorage(const std::string& mediaType, const std::string& location, int quantity): mediaType(mediaType), location(location), quantity(quantity)
 {
     if (store != nullptr) {
         auto allWorks = store->getAllWorks();

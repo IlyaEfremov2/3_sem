@@ -25,6 +25,7 @@ public:
 class MusicStore {
 private:
     std::vector<MusicItem> musicItems;
+    std::vector<MusicStorage> storeStorages;
     double totalSales;
 
 public:
